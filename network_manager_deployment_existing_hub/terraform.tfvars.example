@@ -1,0 +1,70 @@
+# Azure subscription ID
+subscription_id = "00000000-0000-0000-0000-000000000000"
+region          = "westeurope"
+
+tags = {
+  Environment = "Dev"
+  Project     = "NetworkManager"
+  Owner       = "YourTeam"
+}
+
+network_manager_resource_group_name = "network-manager-rg"
+
+network_manager = {
+  name              = "network-manager"
+  scope_accesses    = ["Connectivity", "SecurityAdmin", "Routing"]
+  management_groups = []
+  subscriptions     = ["00000000-0000-0000-0000-000000000000"]
+}
+
+ipam_pools = [
+  {
+    name             = "region1-pool"
+    address_prefixes = ["10.0.0.0/8"]
+    region           = "westeurope"
+    hub_pool = {
+      name             = "hub",
+      address_prefixes = ["10.20.0.0/16"]
+    }
+    spoke_pools = {
+      name             = "spokes"
+      address_prefixes = ["10.128.0.0/9"]
+    }
+    monitoring_pool = {
+      name             = "monitoring"
+      address_prefixes = ["10.10.0.0/16"]
+    }
+  },
+  {
+    name             = "region2-pool"
+    address_prefixes = ["11.0.0.0/8"]
+    region           = "northeurope"
+    hub_pool = {
+      name             = "hub",
+      address_prefixes = ["11.20.0.0/16"]
+    }
+    spoke_pools = {
+      name             = "spokes"
+      address_prefixes = ["11.128.0.0/9"]
+    }
+    monitoring_pool = {
+      name             = "monitoring"
+      address_prefixes = ["11.10.0.0/16"]
+    }
+  }
+]
+
+existing_hubs = [
+  {
+    region              = "westeurope"
+    resource_group_name = "rg-hub-westeurope"
+    vnet_name           = "vnet-hub-westeurope"
+    fw_name             = "fw-hub-westeurope"
+  },
+  {
+    region              = "northeurope"
+    resource_group_name = "rg-hub-northeurope"
+    vnet_name           = "vnet-hub-northeurope"
+    fw_name             = "fw-hub-northeurope"
+  }
+] 

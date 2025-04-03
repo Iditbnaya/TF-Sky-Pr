@@ -1,0 +1,87 @@
+# Azure subscription ID
+subscription_id = "00000000-0000-0000-0000-000000000000"
+region          = "westeurope"
+
+tags = {
+  Environment = "Dev"
+  Project     = "NetworkManager"
+  Owner       = "YourTeam"
+}
+
+spoke = [
+  {
+    region = "westeurope"
+    spokes = [
+      {
+        resource_group_name = "rg-spokes-westeu"
+        vnets = [
+          {
+            name = "spoke1"
+            subnet_mask = 16
+            subnets = [
+              {
+                name = "subnet1"
+                subnet_mask = 24
+              },
+              {
+                name = "subnet2"
+                subnet_mask = 24
+              }
+            ]
+          },
+          {
+            name = "spoke2"
+            subnet_mask = 16
+            subnets = [
+              {
+                name = "subnet1"
+                subnet_mask = 24
+              },
+              {
+                name = "subnet2"
+                subnet_mask = 24
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    region = "northeurope"
+    spokes = [
+      {
+        resource_group_name = "rg-spokes-northeu"
+        vnets = [
+          {
+            name = "spoke1"
+            subnet_mask = 16
+            subnets = [
+              {
+                name = "subnet1"
+                subnet_mask = 24
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]
+
+fw_network_rule_collections = [
+  {
+    name     = "AllowICMPInternal"
+    priority = 1000
+    action   = "Allow"
+    rules = [
+      {
+        name                  = "AllowICMPInternal"
+        source_addresses      = ["10.0.0.0/8"]
+        destination_addresses = ["10.0.0.0/8"]
+        destination_ports     = ["*"]
+        protocols             = ["ICMP"]
+      }
+    ]
+  }
+] 

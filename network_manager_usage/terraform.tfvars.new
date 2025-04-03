@@ -1,0 +1,89 @@
+# Azure subscription ID
+subscription_id = ""
+region          = "israelcentral"
+
+tags = {
+  Environment = "Connactivity"
+  Project     = "NetworkManager"
+  Owner       = ""
+  Datecreated= "2024-4-02"
+  BusinessUnit = "DevOps"     
+}
+
+spoke = [
+  {
+    region = "israelcentral"
+    spokes = [
+      {
+        resource_group_name = "projectname"
+        vnets = [
+          {
+            name = "spoke1"
+            subnet_mask = 16
+            subnets = [
+              {
+                name = "subnet1"
+                subnet_mask = 24
+              },
+              {
+                name = "subnet2"
+                subnet_mask = 24
+              }
+            ]
+          },
+          {
+            name = "spoke2"
+            subnet_mask = 16
+            subnets = [
+              {
+                name = "subnet1"
+                subnet_mask = 24
+              },
+              {
+                name = "subnet2"
+                subnet_mask = 24
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    region = "swedencentral"
+    spokes = [
+      {
+        resource_group_name = "swrgname"
+        vnets = [
+          {
+            name = "spoke1"
+            subnet_mask = 16
+            subnets = [
+              {
+                name = "subnet1"
+                subnet_mask = 24
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]
+
+fw_network_rule_collections = [
+  {
+    name     = "AllowICMPInternal"
+    priority = 1000
+    action   = "Allow"
+    rules = [
+      {
+        name                  = "AllowICMPInternal"
+        source_addresses      = ["10.0.0.0/8"]
+        destination_addresses = ["10.0.0.0/8"]
+        destination_ports     = ["*"]
+        protocols             = ["ICMP"]
+      }
+    ]
+  }
+] 

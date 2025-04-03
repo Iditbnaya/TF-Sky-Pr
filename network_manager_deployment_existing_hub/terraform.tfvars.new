@@ -1,0 +1,95 @@
+# Azure subscription ID
+subscription_id = ""
+region          = "israelcentral"
+
+# Tags to apply to all resources
+tags = {
+  Environment = "Prod"
+  Project     = "NetworkManager"
+  Owner       = "Idit"
+  Date_Created = "2023-10-01"
+  Created_By   = "Iac_Team"
+}
+
+ 
+# Resource group name for the Network Manager
+network_manager_resource_group_name = "NM" # Resource group for the Network Manager
+# Network Manager configuration
+network_manager = {
+  name              = "nm"
+  # Allowed values: "Connectivity", "SecurityAdmin", "Routing"
+  scope_accesses    = ["Connectivity", "SecurityAdmin", "Routing"]
+  # Provide only the GUIDs of the management groups
+  management_groups = []
+  # Provide only the GUIDs of the subscriptions
+  subscriptions     = [""]
+}
+ 
+# IPAM pools configuration with hierarchical structure
+ipam_pools = [
+  {
+    name             = "parent-ipam"                        # Parent IPAM pool name
+    address_prefixes = ["10.0.0.0/8"]                       # Valid CIDR notation required
+    region           = "israelcentral"                      # Region for the IPAM pool
+    # Hub IPAM pool (allocated from parent)
+    hub_pool = {
+      name = "hub"
+      # IMPORTANT: For existing hub deployments, these address prefixes MUST match
+      # the address space of your existing hub VNet
+      address_prefixes = ["10.20.0.0/16"]
+    }
+    # Spoke IPAM pool (allocated from parent)
+    spoke_pools = {
+      name             = "spokes"
+      address_prefixes = ["10.128.0.0/9"]
+    }
+   
+   # Spoke IPAM pool (allocated from parent)
+    monitoring_pool = {
+      name             = "monitoring"
+      address_prefixes = ["10.1.0.0/16"]
+    }
+
+  },
+
+   {
+    name             = "parent-ipam"                        # Parent IPAM pool name
+    address_prefixes = ["11.0.0.0/8"]                       # Valid CIDR notation required
+    region           = "swedencentral"                      # Region for the IPAM pool
+    # Hub IPAM pool (allocated from parent)
+    hub_pool = {
+      name = "hub"
+      # IMPORTANT: For existing hub deployments, these address prefixes MUST match
+      # the address space of your existing hub VNet
+      address_prefixes = ["11.20.0.0/16"]
+    }
+    # Spoke IPAM pool (allocated from parent)
+    spoke_pools = {
+      name             = "spokes"
+      address_prefixes = ["11.128.0.0/9"]
+    }
+   
+   # Spoke IPAM pool (allocated from parent)
+    monitoring_pool = {
+      name             = "monitoring"
+      address_prefixes = ["11.1.0.0/16"]
+    }
+
+  }
+]
+ 
+ 
+existing_hubs = [
+  {
+    region              = "israelcentral"
+    resource_group_name = "rg-hub-il"            # Resource group of the existing hub
+    vnet_name           = "vnet-hub-il"    # Name of the existing hub VNet
+    fw_name             = "fw-hub-il"      # Name of the existing Azure Firewall
+  },
+    {
+    region              = "swedencentral"
+    resource_group_name = "rg-hub-sw"            # Resource group of the existing hub
+    vnet_name           = "vnet-hub-sw"    # Name of the existing hub VNet
+    fw_name             = "fw-hub-sw"      # Name of the existing Azure Firewall
+  }
+]
