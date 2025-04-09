@@ -1,0 +1,9 @@
+terraform {
+    backend "azurerm" {
+        resource_group_name = "RESOURCE_GROUP_NAME"
+        container_name = "CONTAINER_NAME"
+        storage_account_name = "STORAGE_ACCOUNT_NAME"
+        key = "terraform.tfstate"
+        subscription_id = "SUBSCRIPTION_ID" # This should be the subscription ID where the Storage Account is located
+    }
+} 

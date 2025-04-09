@@ -1,0 +1,35 @@
+subscription_id = "SUBSCRIPTION_ID" # Subscription where spoke resources will be deployed
+network_manager_subscription_id = "NETWORK_MANAGER_SUBSCRIPTION_ID" # Subscription where Network Manager is deployed
+
+tags = {
+    environment = "ENVIRONMENT"
+    project = "PROJECT_NAME"
+}
+
+network_manager_backend_config = {
+    storage_account_name = "STORAGE_ACCOUNT_NAME"
+    container_name = "CONTAINER_NAME"
+    key = "terraform.tfstate"
+    resource_group_name = "RESOURCE_GROUP_NAME"
+    subscription_id = "NETWORK_MANAGER_SUBSCRIPTION_ID" # Subscription where the Storage Account containing Network Manager's state is located
+}
+
+spokes = [
+    {
+        name = "spoke1"
+        region = "israelcentral"
+        environment = "dev" # Environment for the spoke (dev, test, prod, etc.)
+        vnets = [
+            {
+                name = "vnet1"
+                subnet_mask = 24
+                subnets = [
+                    {
+                        name = "subnet1"
+                        subnet_mask = 24
+                    }
+                ]
+            }
+        ]
+    }
+] 

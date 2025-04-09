@@ -1,0 +1,35 @@
+variable "regional_ipam_pool_hierarchy" {
+    type = object({
+        name = string
+        region = string
+        hub_pool = object({
+            name = string
+            subnet_mask = number
+        })
+        spokes_pool = object({
+            name = string
+            subnet_mask = number
+        })
+        monitoring_pool = optional(object({
+            name = string
+            subnet_mask = number
+        }), null)
+    })
+}
+
+variable "parent_ipam_pool_name" {
+    type = string
+}
+
+variable "parent_ipam_pool_address_prefix" {
+    type = string
+}
+
+variable "network_manager_id" {
+    type = string
+}
+
+variable "regional_subnet_mask" {
+    type = number
+    default = 11
+}

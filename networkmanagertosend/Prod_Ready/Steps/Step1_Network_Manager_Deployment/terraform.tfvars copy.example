@@ -1,0 +1,85 @@
+subscription_id = "f
+
+regions = ["israelcentral", "swedencentral"]
+
+tags = {
+    environment = "ENVIRONMENT"
+}
+
+network_manager_config = {
+    name = "nm"
+    region = "israelcentral"
+    resource_group_name = "nm"
+    scope_accesses = ["Connectivity", "SecurityAdmin", "Routing"]
+    subscriptions = ["SUBSCRIPTION_ID_1", "SUBSCRIPTION_ID_2"]
+    # If you want to use management groups as scope, first run:
+    # az provider register --namespace Microsoft.Network --management-group <management-group-id>
+    # Then add management groups here:
+    # management_groups = ["MANAGEMENT_GROUP_ID_1", "MANAGEMENT_GROUP_ID_2"]
+}
+
+parent_ipam_pool_config = {
+    name = "parent-pool"
+    address_prefix = "10.0.0.0"
+    address_subnet_mask = 8
+}
+
+# IPAM Pool Hierarchy Configuration:
+# For each pool, you must specify EITHER:
+# 1. subnet_mask - For dynamically calculated address allocation from parent pool (default approach)
+# 2. address_prefix - For static address allocation (in this case, is_child_pool must be false)
+#
+# When using subnet_mask (dynamic allocation):
+# - Hub subnet masks should be between 24-30
+# - Spoke subnet masks should be between 12-29
+# - Monitoring subnet masks should be between 16-29
+ipam_pool_hierarchy = [
+    {
+        name = "israelcentral"
+        region = "israelcentral"
+        hub_pool = {
+            name = "hub-pool"
+            # You can use either subnet_mask for dynamic allocation:
+            # subnet_mask = 24
+            # Or address_prefix for static allocation:
+            address_prefix = "10.20.0.0/24"
+        }
+        spokes_pool = {
+            name = "spokes-pool"
+            subnet_mask = 12
+            # is_child_pool = true # Optional: defaults to false
+        }
+        monitoring_pool = {
+            name = "monitoring-pool"
+            # You can use either subnet_mask for dynamic allocation:
+            # subnet_mask = 16
+            # Or address_prefix for static allocation:
+            address_prefix = "10.10.0.0/24"
+        }
+    },
+    {
+        name = "swedencentral"
+        region = "swedencentral"
+        hub_pool = {
+            name = "hub-pool"
+            # You can use either subnet_mask for dynamic allocation:
+            # subnet_mask = 24
+            # Or address_prefix for static allocation:
+            address_prefix = "10.40.0.0/24"
+        }
+        spokes_pool = {
+            name = "spokes-pool"
+            subnet_mask = 12
+        }
+        # monitoring_pool is optional and can be omitted for regions that don't need it
+    }
+]
+
+existing_hubs_info = [
+    {
+        name = "hub-vnet-name"
+        region = "israelcentral"
+        vnet_id = "/subscriptions/SUBSCRIPTION_ID/resourceGroups/RESOURCE_GROUP_NAME/providers/Microsoft.Network/virtualNetworks/VNET_NAME"
+        fw_private_ip = "10.0.1.4"
+    }
+] 
