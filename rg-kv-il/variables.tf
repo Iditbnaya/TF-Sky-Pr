@@ -56,6 +56,12 @@ variable "default_action" {
   default     = "Deny"
 }
 
+variable "ip_address_subnet_id" {
+  description = "List of IP addresses or subnet IDs for network ACLs."
+  type        = list(string)
+  default     = []
+}
+
 # variable "subnet_id" {
 #   description = "Subnet ID for the private endpoint"
 #   type        = string
@@ -69,4 +75,35 @@ variable "management_subscription_id" {
   description = "The ID of the management subscription"
   type        = string
   default     = ""
+}
+
+variable "enabled_for_deployment" {
+  description = "Specifies whether the Key Vault can be used for deployment."
+  type        = bool
+  default     = true
+    
+}
+
+variable "enabled_for_disk_encryption" {
+  description = "Specifies whether the Key Vault can be used for disk encryption."
+  type        = bool
+  default     = true
+}
+
+variable "enabled_for_template_deployment" {
+  description = "Specifies whether the Key Vault can be used for template deployment."
+  type        = bool
+  default     = true
+}
+
+variable "allowed_ip_addresses" {
+  description = "List of IP addresses allowed through the firewall."
+  type        = list(string)
+  default     = []
+}
+
+variable "tags" {
+  description = "A map of tags to assign to the Key Vault."
+  type        = map(string)
+  default     = {}
 }

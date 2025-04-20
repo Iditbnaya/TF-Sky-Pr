@@ -1,0 +1,19 @@
+management_subscription_id = "6b984853-c753-4966-a021-83e348302eed"
+name     = "prod-keyvault-il"
+location = "israelcentral"
+resource_group_name = "rg-kvnew1-il"
+sku = "premium"
+default_action = "Deny"
+soft_delete_retention_days = 90
+enable_rbac_authorization = true
+public_network_access_enabled = true
+enabled_for_deployment = true
+enabled_for_disk_encryption = true
+enabled_for_template_deployment = true
+allow_bypass = "AzureServices"
+purge_protection_enabled = true
+allowed_ip_addresses = [
+  "89.138.191.41/32",
+  "8.8.8.1/32",
+   "1.2.3.4/32"
+]

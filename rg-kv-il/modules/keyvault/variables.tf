@@ -43,24 +43,75 @@ variable "public_network_access_enabled" {
   default     = false
 }
 
-# variable "allow_bypass" {
-#   description = "Allowed bypass setting for network ACLs"
+variable "enabled_for_deployment" {
+  description = "Specifies whether the Key Vault can be used for deployment."
+  type        = bool
+  default     = true
+}
+
+variable "allow_bypass" {
+  description = "Allowed bypass setting for network ACLs"
+  type        = string
+  default     = "AzureServices"
+}
+
+variable "default_action" {
+  description = "Default action for network ACLs"
+  type        = string
+  default     = "Deny"
+}
+
+# variable "ip_address_subnet_id" {
+#   description = "IP address or subnet ID for the private endpoint"
 #   type        = string
-#   default     = "AzureServices"
+#   default     = null
 # }
 
-# variable "default_action" {
-#   description = "Default action for network ACLs"
-#   type        = string
-#   default     = "Deny"
+variable "ip_address_subnet_id" {
+  description = "List of IP addresses or subnet IDs for network ACLs."
+  type        = list(string)
+  default     = []
+}
+
+variable "enabled_for_template_deployment" {
+  description = "Specifies whether the Key Vault can be used for template deployment."
+  type        = bool
+  default     = true
+}
+
+variable "enabled_for_disk_encryption" {
+  description = "Specifies whether Azure Disk Encryption is permitted to retrieve secrets from the vault."
+  type        = bool
+  default     = true
+}
+
+# variable "allowed_ip_addresses" {
+#   type    = list(string)
+#   default = []
+# }
+variable "allowed_ip_addresses" {
+  description = "List of IP addresses allowed through the firewall."
+  type        = list(string)
+  default     = []
+}
+variable "tags" {
+  description = "A map of tags to assign to the Key Vault."
+  type        = map(string)
+  default     = {}
+}
+
+# variable "network_acls" {
+#   description = "Specifies the network ACLs for the Key Vault."
+#   type = object({
+#     bypass         = string
+#     default_action = string
+#     ip_rules       = list(object({ ip_address_subnet_id = string }))
+#   })
+#   default = null
 # }
 
-# variable "subnet_id" {
-#   description = "Subnet ID for the private endpoint"
-#   type        = string
-# }
-
-# variable "dns_resource_group" {
-#   description = "Name of the dns resource group"
-#   type        = string
-# }
+variable "bypass" {
+  description = "Specifies which traffic can bypass the firewall."
+  type        = string
+  default     = "AzureServices"
+}
