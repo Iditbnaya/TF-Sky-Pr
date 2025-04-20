@@ -1,4 +1,4 @@
-management_subscription_id = "6b984853-c753-4966-a021-83e348302eed"
+management_subscription_id = ""
 name     = "prod-keyvault-il"
 location = "israelcentral"
 resource_group_name = "rg-kvnew1-il"
