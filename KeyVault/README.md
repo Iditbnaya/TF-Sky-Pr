@@ -95,7 +95,7 @@ To prevent policy enforcement errors when deploying Key Vaults.
 
 ## 👩‍💻 Author
 
-Built by [@Iditbnaya](https://github.com/Iditbnaya) & [@Michael](https://github.com/michael)  
+Built by [@Iditbnaya](https://github.com/Iditbnaya)
 Part of the [TF-Sky-Pr](https://github.com/Iditbnaya/TF-Sky-Pr) Azure infrastructure suite ☁️
 
 ---
