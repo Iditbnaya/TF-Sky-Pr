@@ -198,6 +198,9 @@ All deployment options support multiple regions through:
 
 IMPORTANT: For Option 3 (Multi-part Deployment), the regions specified in Part 2 must match regions already configured in Part 1.
 
+![image](https://github.com/user-attachments/assets/f7015506-c039-4ff2-92f9-f3414ca2f20a)
+
+
 ## License
 
 This project is licensed under the MIT License. See the LICENSE file for details. 
